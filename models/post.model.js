@@ -4,7 +4,8 @@ const { Schema } = mongoose;
 const postSchema = new Schema({
 
     text: {
-        type: String
+        type: String,
+        required: true
     },
 
     file: {
@@ -15,13 +16,14 @@ const postSchema = new Schema({
         type: String
     },
 
-    createdOn: {
-        type: Date,
-        required: true
-    },
+    // createdOn: {
+    //     type: Date,
+    //     required: true
+    // },
 
     user_id: {
-        type: Number
+        type: Schema.Types.ObjectId,
+        ref: "User"
     }
 
 });

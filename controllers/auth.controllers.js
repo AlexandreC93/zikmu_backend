@@ -14,7 +14,9 @@ const createToken = (id) => {
 
 // 2 s'inscrire // Quand tu es sur la page S'INSCRIRE tu m'affiche firstname lastname...
 module.exports.signUp = async (req, res) => {
+
     console.log(req.body)
+    
     const { fullName, surname, email, image, password, birthDate } = req.body
     try {
         const user = await userModel.create([{ fullName, surname, image, email, password, birthDate }])
