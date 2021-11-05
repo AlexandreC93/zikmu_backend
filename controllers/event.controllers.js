@@ -10,7 +10,7 @@ module.exports.create = async (req, res) => {
 
     const { title, text, category, file, location } = req.body
     try {
-        const event = await eventModel.create([{title, text, category, file, location }])
+        const event = await eventModel.create([{ title, text, category, file, location }])
         res.status(202).json({ event })
         console.log(req.body, "req.body")
         console.log({ event })
@@ -19,4 +19,9 @@ module.exports.create = async (req, res) => {
         console.log(err)
         res.status(500).json({ err })
     }
+}
+
+module.exports.getAllEvents = async (req, res) => {
+   const events =  eventModel.find().select()
+   res.status(200).json(events)
 }

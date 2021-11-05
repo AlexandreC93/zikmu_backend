@@ -56,64 +56,88 @@ module.exports.deleteUser = async (req, res, next) => {
 
 
 module.exports.follow = async (req, res) => {
-    if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.idToFollow))
-        return res.status(400).send('ID unknow : ' + req.params.id)
+    // if (!ObjectID.isValid(req.params.id) || !ObjectID.isValid(req.body.idToFollow))
+    //     return res.status(400).send('ID unknow : ' + req.params.id)
 
     try {
+
+        const updatedFollower = await userModel.findByIdAndUpdate(req.params.id, { $addToSet: { following: req.body.idToFollow } },
+            { new: true, upsert: true });
+
+        const updatedFollowing = await userModel.findByIdAndUpdate(req.body.idToFollow, { $addToSet: { followers: req.params.id } },
+            { new: true, upsert: true });
+
+        res.status(200).json({updatedFollower, updatedFollowing})
+
+
         //add to the follower list
-        await userModel.findByIdAndUpdate(
-            req.params.id,
-            { $addToSet: { following: req.body.idToFollow } },
-            { new: true, upsert: true },
-            (err, docs) => {
-                if (!err) res.status(201).json(docs)
-                else return res.status(400).json(err);
-            }
-        )
+        // await userModel.findByIdAndUpdate(
+        //     req.params.id,
+        //     { $addToSet: { following: req.body.idToFollow } },
+        //     { new: true, upsert: true },
+        //     (err, docs) => {
+        //         if (!err) res.status(201).json(docs)
+        //         else return res.status(400).json(err);
+        //     }
+        // )
+
         //add to following list
-        await userModel.findByIdAndUpdate(
-            req.body.idToFollow,
-            { $addToSet: { followers: req.params.id } },
-            { new: true, upsert: true},
-            (err, docs) => {
-                if (err) return res.status(400).json(err)
-            }
-        )
+        // await userModel.findByIdAndUpdate(
+        //     req.body.idToFollow,
+        //     { $addToSet: { followers: req.params.id } },
+        //     { new: true, upsert: true },
+        //     (err, docs) => {
+        //         if (err) return res.status(400).json(err)
+        //     }
+        // )
     }
 
     catch (err) {
+        console.log("never")
         return res.status(500).json({ message: err })
     }
 }
 
 
 module.exports.unfollow = async (req, res) => {
-    if (!isValidObjectId(req.params.id))
-        return res.status(400).send('ID unknow : ' + req.params.id)
+    // if (!isValidObjectId(req.params.id))
+    //     return res.status(400).send('ID unknow : ' + req.params.id)
 
     try {
+
+        const updatedFollower = await userModel.findByIdAndUpdate(req.params.id, { $addToSet: { following: req.body.idToFollow } },
+            { new: true, upsert: true });
+
+        const updatedFollowing = await userModel.findByIdAndUpdate(req.body.idToFollow, { $addToSet: { followers: req.params.id } },
+            { new: true, upsert: true });
+
+        res.status(200).json(updatedFollower, updatedFollowing)
+
+
         //add to the follower list
-        await userModel.findByIdAndUpdate(
-            req.params.id,
-            { $addToSet: { following: req.body.idToFollow } },
-            { new: true, upsert: true },
-            (err, docs) => {
-                if (!err) res.status(201).json(docs)
-                else return res.status(400).json(err);
-            }
-        )
+        // await userModel.findByIdAndUpdate(
+        //     req.params.id,
+        //     { $addToSet: { following: req.body.idToFollow } },
+        //     { new: true, upsert: true },
+        //     (err, docs) => {
+        //         if (!err) res.status(201).json(docs)
+        //         else return res.status(400).json(err);
+        //     }
+        // )
+
         //add to following list
-        await userModel.findByIdAndUpdate(
-            req.body.idToFollow,
-            { $addToSet: { followers: req.params.id } },
-            { new: true, upsert: true},
-            (err, docs) => {
-                if (err) return res.status(400).jsos(err)
-            }
-        )
+        // await userModel.findByIdAndUpdate(
+        //     req.body.idToFollow,
+        //     { $addToSet: { followers: req.params.id } },
+        //     { new: true, upsert: true },
+        //     (err, docs) => {
+        //         if (err) return res.status(400).json(err)
+        //     }
+        // )
     }
 
     catch (err) {
+        console.log("never")
         return res.status(500).json({ message: err })
     }
 }
