@@ -28,7 +28,7 @@ const eventSchema = new Schema({
 
     createdOn: {
         type: Date,
-        required: true
+        
     },
     
     user_id: {

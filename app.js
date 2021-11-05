@@ -8,6 +8,7 @@ const cookieParser =require('cookie-parser')
 const userRouter = require('./routes/user.routes.js');
 const indexRouter = require('./routes/index.routes.js')
 const postRouter = require('./routes/post.routes.js')
+const eventRouter = require('./routes/event.routes.js')
 
 const env = require('./config/.env')
 const app = express();
@@ -30,6 +31,8 @@ app.set('view engine', 'handlebars');
 app.use('/user', userRouter);
 app.use('/', indexRouter)
 app.use('/post', postRouter)
+app.use('/event', eventRouter)
+
 
 env.connect
 
