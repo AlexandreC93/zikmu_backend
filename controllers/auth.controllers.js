@@ -69,10 +69,10 @@ module.exports.getUserPage = (req, res) => {
 module.exports.contact = async (req, res) => {
 
     console.log(req.body)
-    
-    const {fullName, email, object, text, file } = req.body
+
+    const { fullName, email, object, text, file } = req.body
     try {
-        const contact = await contactModel.create([{ fullName, object,email, text, file }])
+        const contact = await contactModel.create([{ fullName, object, email, text, file }])
         res.status(202).json({ contact })
         console.log(req.body, "req.body")
         console.log({ contact })
