@@ -1,5 +1,5 @@
 const userModel = require('../models/user.model.js')
-
+const contactModel = require('../models/contact.model.js')
 // npm i jsonwebtoken et require 
 const jwt = require('jsonwebtoken')
 
@@ -16,7 +16,7 @@ const createToken = (id) => {
 module.exports.signUp = async (req, res) => {
 
     console.log(req.body)
-    
+
     const { fullName, surname, email, image, password, birthDate } = req.body
     try {
         const user = await userModel.create([{ fullName, surname, image, email, password, birthDate }])
@@ -63,4 +63,22 @@ module.exports.getUserPage = (req, res) => {
         .then()
         .catch()
 
+}
+
+
+module.exports.contact = async (req, res) => {
+
+    console.log(req.body)
+    
+    const {fullName, email, object, text, file } = req.body
+    try {
+        const contact = await contactModel.create([{ fullName, object,email, text, file }])
+        res.status(202).json({ contact })
+        console.log(req.body, "req.body")
+        console.log({ contact })
+    }
+    catch (err) {
+        console.log(err)
+        res.status(500).json({ err })
+    }
 }
