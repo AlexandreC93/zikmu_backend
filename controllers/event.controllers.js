@@ -4,6 +4,8 @@ const eventModel = require('../models/event.model.js')
 // npm i jsonwebtoken et require 
 const jwt = require('jsonwebtoken')
 
+
+//creation d'un event
 module.exports.create = async (req, res) => {
 
     console.log(req.body)
@@ -20,8 +22,9 @@ module.exports.create = async (req, res) => {
         res.status(500).json({ err })
     }
 }
-
+//Pour avoir tout les events
 module.exports.getAllEvents = async (req, res) => {
-   const events =  eventModel.find().select()
-   res.status(200).json(events)
+    console.log("event")
+   const events =  await eventModel.find().select()
+   res.status(200).json({events})
 }
