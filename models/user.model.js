@@ -52,6 +52,9 @@ const userSchema = new Schema({
     },
     likes: {
         type: [String]
+    },
+    recommandations: {
+        type: [String]
     }
 },
     {
