@@ -9,6 +9,7 @@ const userRouter = require('./routes/user.routes.js');
 const indexRouter = require('./routes/index.routes.js')
 const postRouter = require('./routes/post.routes.js')
 const eventRouter = require('./routes/event.routes.js')
+const categoryRouter = require('./routes/category.routes.js')
 
 const env = require('./config/.env')
 const app = express();
@@ -32,6 +33,7 @@ app.use('/user', userRouter);
 app.use('/', indexRouter)
 app.use('/post', postRouter)
 app.use('/event', eventRouter)
+app.use('/category',categoryRouter)
 
 
 env.connect

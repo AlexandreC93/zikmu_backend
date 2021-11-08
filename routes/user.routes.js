@@ -20,8 +20,18 @@ router.get("/logout", authController.logout);
 router.get("/profil", (req, res) => {
   res.render("profil");
 });
+// 
+router.get("/:id", userController.userInfo)
+
+router.get('/', userController.getAllUsers)
+
+router.put('/:id', userController.updateUser)
+
+router.delete('/:id', userController.deleteUser)
+
+router.patch("/follow/:id", userController.follow)
+router.patch("/unfollow/:id", userController.unfollow)
 
 //
-router.get("/:id", authController.getUserPage);
 
 module.exports = router;
