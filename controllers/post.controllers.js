@@ -102,14 +102,14 @@ module.exports.unlikePost = async (req, res, next) => {
         const updatedPost = await postModel.findByIdAndUpdate(
             req.params.id,
             {
-                $addToSet: { likers: req.body.id }
+                $pull: { likers: req.body.id }
             },
             { new: true }
         );
         const updatedUser = await userModel.findByIdAndUpdate(
             req.body.id,
             {
-                $addToSet: { likes: req.params.id }
+                $pull: { likes: req.params.id }
             },
             { new: true }
         )
