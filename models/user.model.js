@@ -26,7 +26,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        validate: isEmail,
+        validate: [isEmail],
         trim: true
     },
     password: {
@@ -55,6 +55,9 @@ const userSchema = new Schema({
     },
     recommandations: {
         type: [String]
+    },
+    messages: {
+        type: [String],
     }
 },
     {

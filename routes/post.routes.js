@@ -6,11 +6,18 @@ const postController = require('../controllers/post.controllers.js')
 router.get('/', function(req, res, next) {
   res.render('post');
 });
-
+router.get('/all', postController.readPost)
 router.get('/submit', function(req, res, next) {
   res.render('submit');
 });
 
-router.post('/submit',postController.submit)
+router.put('/:id', postController.updatePost)
+
+router.post('/submit',postController.createPost)
+
+router.delete('/:id', postController.deletePost)
+
+router.patch('/like-post/:id', postController.likePost)
+router.patch('/unlike-post/:id', postController.unlikePost)
 
 module.exports = router;

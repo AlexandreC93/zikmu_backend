@@ -2,30 +2,47 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const postSchema = new Schema({
-
-    text: {
+    //id du user qui post
+    posterId: {
         type: String,
         required: true
     },
 
-    file: {
+    message: {
+        type: String,
+        trim: true,
+        maxlength: 500
+    },
+
+    picture: {
         type: String
     },
 
-    location: {
-        type: String
+    video: {
+        type: String,
+
     },
-
-    // createdOn: {
-    //     type: Date,
-    //     required: true
-    // },
-
-    user_id: {
-        type: Schema.Types.ObjectId,
-        ref: "User"
+    likers: {
+        type: [String],
+        required: true,
+    },
+    //commentaire de post
+    comments: {
+        type: [
+            //pour eviter plusieurs likes
+            {
+                commenterId: String,
+                commenterPseudo: String,
+                text: String,
+                timestamps: Number,
+            }
+        ],
+        required: true,
     }
 
-});
+},
+    {
+        timestamps: true,
+    });
 
 module.exports = mongoose.model('Post', postSchema)

@@ -3,6 +3,7 @@ const router = express.Router();
 
 // 2 J'ai appelé le fichier authController pour pouvoir modifier les connection deconnection et s'identifier
 const authController = require("../controllers/auth.controllers");
+const userController = require('../controllers/user.controllers.js')
 
 // 2 Creation de route pour s'inscrire VOIR DOSSIER contollers/auth.controllers.js
 router.get("/register", (req, res, next) => {
