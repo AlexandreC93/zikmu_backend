@@ -17,9 +17,9 @@ module.exports.signUp = async (req, res) => {
 
     console.log(req.body)
 
-    const { fullName, surname, email, image, password, birthDate } = req.body
+    const { fullName, surname, email, image, password, gender } = req.body
     try {
-        const user = await userModel.create([{ fullName, surname, image, email, password, birthDate }])
+        const user = await userModel.create([{ fullName, surname, image, email, password, gender }])
         res.status(202).json({ user })
         console.log(req.body, "req.body")
         console.log({ user })

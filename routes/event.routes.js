@@ -9,7 +9,7 @@ router.get('/form', (req, res, next) => {
     res.render('eventForm')
 })
 
-router.post('/form', eventController.create)
+router.post('/submit', eventController.create)
 
 
 module.exports = router;

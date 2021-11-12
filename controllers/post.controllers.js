@@ -7,10 +7,12 @@ module.exports.createPost = async (req, res, next) => {
     console.log("submit", req.body)
     const newPost = new postModel({
         posterId: req.body.posterId,
+        category: req.body.category,
         message: req.body.message,
         video: req.body.video,
         likers: [],
-        comments: []
+        comments: [],
+
     });
 
     try {
@@ -25,11 +27,27 @@ module.exports.createPost = async (req, res, next) => {
 }
 
 module.exports.readPost = async (req, res, next) => {
-    console.log(req.body);
-    postModel.find((err, docs) => {
-        if (!err) res.send(docs);
-        else console.log('Error to get data : ' + err)
-    }).sort({ createdAt: -1 })
+
+    try {
+        const postWithUser = await postModel.find().populate({
+            path: 'posterId',
+            select: "surname image"
+        })
+        console.log(postWithUser)
+        res.status(200).json(postWithUser)
+        // .sort({ createdAt: -1 })
+
+    } catch (err) {
+        console.error(err)
+        return err
+    }
+
+
+    // userModel.findOne({_id: userId})
+    // .populate('posts')
+    // .then(user => {
+    //     res.json(user)
+    // })
 }
 
 module.exports.updatePost = async (req, res, next) => {
@@ -119,7 +137,7 @@ module.exports.unlikePost = async (req, res, next) => {
     }
 }
 
-module.exports.commentPost = async (req, res, next) => {
+module.exports.commentPost = (req, res, next) => {
     console.log(req.body)
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send('ID Unknow : ' + req.params.id);

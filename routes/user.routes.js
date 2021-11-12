@@ -4,12 +4,14 @@ const router = express.Router();
 // 2 J'ai appelé le fichier authController pour pouvoir modifier les connection deconnection et s'identifier
 const authController = require("../controllers/auth.controllers");
 const userController = require('../controllers/user.controllers.js')
-
+const uploadController = require('../controllers/upload.controllers.js')
+const multer = require('multer');
+const upload = multer()
 // 2 Creation de route pour s'inscrire VOIR DOSSIER contollers/auth.controllers.js
 router.get("/register", (req, res, next) => {
   res.render("register");
 });
-router.post("/register", authController.signUp);
+router.post("/signup", authController.signUp);
 
 // Creation de route pour se connecter  VOIR DOSSIER contollers/auth.controllers.js
 router.post("/login", authController.signIn);
@@ -32,6 +34,8 @@ router.delete('/:id', userController.deleteUser)
 
 router.patch("/follow/:id", userController.follow)
 router.patch("/unfollow/:id", userController.unfollow)
+
+router.post('/upload', upload.single('file'), uploadController.uploadProfil)
 
 //
 

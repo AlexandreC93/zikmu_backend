@@ -13,6 +13,7 @@ const categoryRouter = require('./routes/category.routes.js')
 const messagesRouter = require('./routes/message.routes.js')
 const conversationRouter = require('./routes/conversation.routes.js')
 const postCatRouter = require('./routes/postCat.routes.js')
+const locationRouter = require('./routes/location.routes.js')
 
 const env = require('./config/.env')
 const app = express();
@@ -40,6 +41,7 @@ app.use('/category',categoryRouter)
 app.use('/conversation', conversationRouter)
 app.use('/messages', messagesRouter)
 app.use('/post-categories', postCatRouter)
+app.use('/locations', locationRouter)
 
 
 env.connect

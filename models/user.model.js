@@ -20,7 +20,6 @@ const userSchema = new Schema({
     },
     birthDate: {
         type: Date,
-        required: true,
     },
     email: {
         type: String,
@@ -53,20 +52,28 @@ const userSchema = new Schema({
     likes: {
         type: [String]
     },
+
+    gender: {
+        type: String,
+        enum: ["Homme", "Femme", "Non-Binary"],
+        default: "Homme"
+    },
     recommandations: {
         type: [String]
     },
     messages: {
         type: [String],
-    }
+    },
+    
 },
     {
         timestamps: true,
+        strict: false
     });
 
 //Function avant de sauvegarder pour hasher le MDP
 
-userSchema.pre('save',async function(next){
+userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt()
     this.password = await bcrypt.hash(this.password, salt);
     next();

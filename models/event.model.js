@@ -15,26 +15,34 @@ const eventSchema = new Schema({
 
     category: {
         type: String,
-        enum: ["Rap", "Pop", "Funk"]
+        enum: ["Comédie musicale", "Concerts", "Festival",
+            "Savoir pratiques", "Street-Dance", "Opéra", "Autre"]
     },
 
     file: {
         type: String
     },
 
-    location: {
-        type: String
+    coordinates: {
+        lat: {
+            type: Number,
+            required: true,
+        },
+        lng: {
+            type: Number,
+            required: true,
+        },
     },
 
     createdOn: {
         type: Date,
-        
+
     },
-    
+
     user_id: {
         type: Number
     }
-    
+
 });
 
 module.exports = mongoose.model('Event', eventSchema)

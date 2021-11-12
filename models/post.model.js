@@ -4,8 +4,13 @@ const { Schema } = mongoose;
 const postSchema = new Schema({
     //id du user qui post
     posterId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+
+    category: {
         type: String,
-        required: true
     },
 
     message: {
@@ -31,14 +36,18 @@ const postSchema = new Schema({
         type: [
             //pour eviter plusieurs likes
             {
-                commenterId: String,
+                postedBy: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'User'
+                },
                 commenterPseudo: String,
                 text: String,
                 timestamps: Number,
             }
         ],
         required: true,
-    }
+    },
+
 
 },
     {
