@@ -5,29 +5,33 @@ const eventModel = require('../models/event.model.js')
 const jwt = require('jsonwebtoken')
 
 
+
 //creation d'un event
 module.exports.create = async (req, res) => {
-
+    // const coordinates = req.body.coordinate
+    const coordinatesObject = JSON.parse(req.body.coordinates)
     console.log(req.body)
+    console.log(req.file)
+    console.log(coordinatesObject);
+    const { title, text, category } = req.body
+    // res.status(200).json(req.body);
+    console.log("COORDINATE OBJECT >>>>>>>>>", coordinatesObject)
+    // const type = req.body.type.split(" ").join().toLowerCase();
 
-    const { title, text, category, file, location } = req.body
+    // if (!req.file) {
+    //     return res.status(400).json({
+    //         message: "You need to provide at least one image",
+    //     });
+    // }
 
-    const coordinatesObject = JSON.parse(req.body.coordinates);
-    const type = req.body.type.split(" ").join().toLowerCase();
-    delete req.body.coordinates;
-    delete req.body.type;
-
-
-    if (!req.files) {
-        return res.status(400).json({
-            message: "You need to provide at least one image",
-        });
-    }
-    const picturesUrl = req.files.map(
-        (file) => `/pictures/event/${file.filename}`
-    );
     try {
-        const event = await eventModel.create([{ title, text, category, file, location }])
+        // const pictures = req.file?.map(
+        //     (file) => `/pictures/event/${file.filename}`
+        // );
+        const event = await eventModel.create([{
+            title, text, category, coordinatesObject
+        }])
+
         res.status(202).json({ event })
         console.log(req.body, "req.body")
         console.log({ event })

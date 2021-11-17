@@ -1,19 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/post.controllers.js')
+const { multerSingle } = require('../middlewares/multer.js')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('post');
+router.get('/', function (req, res, next) {
+    res.render('post');
 });
 router.get('/all', postController.readPost)
-router.get('/submit', function(req, res, next) {
-  res.render('submit');
+router.get('/submit', function (req, res, next) {
+    res.render('submit');
 });
 
 router.put('/:id', postController.updatePost)
 
-router.post('/submit',postController.createPost)
+router.post('/submit', multerSingle, postController.createPost)
 
 router.delete('/:id', postController.deletePost)
 

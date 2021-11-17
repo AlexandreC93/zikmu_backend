@@ -3,14 +3,17 @@ const contactModel = require('../models/contact.model.js')
 // npm i jsonwebtoken et require 
 const jwt = require('jsonwebtoken')
 
-// 1
 // Le jwt est valable QUE 3 jours apres on va lui demander de se reconneter
 const maxAge = 3 * 24 * 60 * 60 * 1000;
+
 const createToken = (id) => {
-    return jwt.sign({ id }, {
+    return jwt.sign({ id }, process.env.TOKEN_SECRET, {
         expiresIn: maxAge
     })
-};
+}
+
+// 1
+
 
 // 2 s'inscrire // Quand tu es sur la page S'INSCRIRE tu m'affiche firstname lastname...
 module.exports.signUp = async (req, res) => {
@@ -20,7 +23,7 @@ module.exports.signUp = async (req, res) => {
     const { fullName, surname, email, image, password, gender } = req.body
     try {
         const user = await userModel.create([{ fullName, surname, image, email, password, gender }])
-        res.status(202).json({ user })
+        res.status(202).json({ user: user._id })
         console.log(req.body, "req.body")
         console.log({ user })
     }
@@ -33,15 +36,19 @@ module.exports.signUp = async (req, res) => {
 // 3 se connecter // 
 module.exports.signIn = async (req, res) => {
     // affichage des email et password 
-    const { email, password } = req.body
+    console.log(req.body)
+    console.log(req.cookie)
+    const { email, password } = req.body;
     try {
         const user = await userModel.login(email, password);
         const token = createToken(user._id);
         // res.cookie tu me garde dans cookiie les email et identifant il va rester activer que sur le serveur
-        res.cookie('jwt', token, { httpOnly: true, maxAge });
         // si c'est ok res.status 200 on a reussi
-        res.status(201).json({ user: user._id })
+        res.cookie('jwt', token);
+        // res.setHeader('Set-Cookie', `jwt=${token}; Max-Age=${maxAge}; HttpOnly; secure`);
+        res.status(200).json({ user: user._id });
     } catch (err) {
+        console.log("token", err)
         res.status(500).json({ err });
     }
 }

@@ -4,11 +4,12 @@ const ObjectID = require('mongoose').Types.ObjectId;
 
 
 module.exports.createPost = async (req, res, next) => {
-    console.log("submit", req.body)
+    console.log("submit", req.file)
     const newPost = new postModel({
         posterId: req.body.posterId,
         category: req.body.category,
         message: req.body.message,
+        file: `${req.file.destination}/${req.file.filename}`,
         video: req.body.video,
         likers: [],
         comments: [],
@@ -17,8 +18,8 @@ module.exports.createPost = async (req, res, next) => {
 
     try {
         const post = await newPost.save();
-        return res.status(202).json(post)
         console.log({ post })
+        return res.status(202).json(post)
     }
     catch (err) {
         console.log(err)
@@ -33,7 +34,7 @@ module.exports.readPost = async (req, res, next) => {
             path: 'posterId',
             select: "surname image"
         })
-        console.log(postWithUser)
+        // console.log(postWithUser)
         res.status(200).json(postWithUser)
         // .sort({ createdAt: -1 })
 

@@ -8,6 +8,7 @@ module.exports.getAllUsers = async (req, res) => {
 }
 
 module.exports.userInfo = (req, res) => {
+    console.log(req.body)
     console.log("REQ PARAMS >>>>>> ", req.params)
     if (!ObjectID.isValid(req.params.id))
         return res.status(400).send('ID Unknow : ' + req.params.id)
@@ -69,7 +70,7 @@ module.exports.follow = async (req, res) => {
         const updatedFollowing = await userModel.findByIdAndUpdate(req.body.idToFollow, { $addToSet: { followers: req.params.id } },
             { new: true, upsert: true });
 
-        res.status(200).json({updatedFollower, updatedFollowing})
+        res.status(200).json({ updatedFollower, updatedFollowing })
 
 
         //add to the follower list
@@ -113,7 +114,7 @@ module.exports.unfollow = async (req, res) => {
         const updatedFollowing = await userModel.findByIdAndUpdate(req.body.idToUnFollow, { $pull: { followers: req.params.id } },
             { new: true, upsert: true });
 
-        res.status(200).json({updatedFollower, updatedFollowing})
+        res.status(200).json({ updatedFollower, updatedFollowing })
 
     }
 

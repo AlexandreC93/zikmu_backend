@@ -19,7 +19,7 @@ const postSchema = new Schema({
         maxlength: 500
     },
 
-    picture: {
+    file: {
         type: String
     },
 

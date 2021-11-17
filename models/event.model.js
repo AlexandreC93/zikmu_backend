@@ -16,14 +16,18 @@ const eventSchema = new Schema({
     category: {
         type: String,
         enum: ["Comédie musicale", "Concerts", "Festival",
-            "Savoir pratiques", "Street-Dance", "Opéra", "Autre"]
+            "Savoirs pratiques", "Street-Dance", "Opéra", "Autre"]
     },
 
     file: {
         type: String
     },
 
-    coordinates: {
+    location: {
+        type: String,
+    },
+
+    coordinatesObject: {
         lat: {
             type: Number,
             required: true,
@@ -40,7 +44,8 @@ const eventSchema = new Schema({
     },
 
     user_id: {
-        type: Number
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
     }
 
 });

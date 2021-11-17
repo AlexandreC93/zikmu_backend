@@ -12,7 +12,7 @@ const uniqueFilename = (req, file, cb) => {
 // })
 
 const locationStorage = multer.diskStorage({
-    destination: "pictures/event",
+    destination: "/public/image/zikmu",
     filename: uniqueFilename
 })
 
@@ -20,7 +20,7 @@ module.exports = {
     // multerSingle: multer({
     //     storage: avatarStorage
     // }).single("image"),
-    multerArray: multer({
+    multerSingle: multer({
         storage: locationStorage
-    }).array("pictures", 5)
+    }).single("file")
 }
